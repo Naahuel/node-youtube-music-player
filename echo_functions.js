@@ -31,13 +31,22 @@ const echo_status = ( ...text) => {
   return term.bold.moveTo.eraseLine.white( LINES.STATUS[0], LINES.STATUS[1],  ...text );
 }
 
-const echo_playlist = (playlist, playingIndex) => {
+const echo_clear_playlist = (playlist) => {
   let yPos = LINES.PLAYLIST[1];
   playlist.forEach((item, index) => {
-    let isPlaying = index === playingIndex ? '>>' : '  ';
-    term.bold.moveTo.eraseLine.white( LINES.PLAYLIST[0], yPos, "%s#%s\t%s", isPlaying, index, item );
+    term.bold.moveTo.eraseLine( LINES.PLAYLIST[0], yPos);
     yPos += 1;
   })
 }
 
-module.exports = { echo_input, echo_input_success, echo_instructions, echo_status, echo_playlist }
+const echo_playlist = (playlist, playingIndex) => {
+  let yPos = LINES.PLAYLIST[1];
+  playlist.forEach((item, index) => {
+    let isPlaying = index === playingIndex ? '>>' : '  ';
+    let color     = index === playingIndex ? 'green' : 'white';
+    term.bold.moveTo.eraseLine.eraseLineAfter[color]( LINES.PLAYLIST[0], yPos, "%s#%s\t%s", isPlaying, index, item );
+    yPos += 1;
+  })
+}
+
+module.exports = { echo_input, echo_input_success, echo_instructions, echo_status, echo_playlist, echo_clear_playlist }
