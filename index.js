@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 "use strict";
 const term = require( 'terminal-kit' ).terminal;
 const { spawn } = require( 'child_process' );
