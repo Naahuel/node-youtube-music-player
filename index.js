@@ -31,10 +31,20 @@ function set_state(state){
 }
 
 function play_next(){
-  set_state({
-    playingIndex: STATE.playingIndex + 1
-  });
-  play_song(STATE.playingIndex);
+  if( STATE.playingIndex < PLAYLIST.length - 1){
+    set_state({
+      playingIndex: STATE.playingIndex + 1
+    });
+    play_song(STATE.playingIndex);
+  }
+}
+function play_prev(){
+  if( STATE.playingIndex > 0 ) {
+    set_state({
+      playingIndex: STATE.playingIndex - 1
+    });
+    play_song(STATE.playingIndex);
+  }
 }
 
 function play_song(index){
@@ -148,6 +158,8 @@ term.on( 'key' , function( name , matches , data ) {
     if ( name === 'a' ) { request_add_item() ; }
     if ( name === 'd' ) { request_delete_item() ; }
     if ( name === 'i' ) { request_play_item() ; }
+    if ( name === 'n' ) { play_next() ; }
+    if ( name === 'p' ) { play_prev() ; }
   }
 } ) ;
 
