@@ -1,0 +1,14 @@
+{
+  "name": "youtube-music-player",
+  "version": "0.1.0",
+  "description": "An attempt at a Music Player using node and mpv",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nahuel José",
+  "license": "MIT",
+  "dependencies": {
+    "terminal-kit": "^1.28.0"
+  }
+}
