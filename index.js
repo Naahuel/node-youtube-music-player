@@ -68,16 +68,18 @@ function play_song(index){
     });
 
     PLAYER.on( 'close', code => {
-      PLAYER = null;
-      if( PLAYLIST.length === (STATE.playingIndex + 1) ) {
-        echo_status('Finished playing.');
-        set_state({
-          isPlaying: false,
-          playingIndex: -1
-        });
-        echo_playlist(PLAYLIST, STATE.playingIndex);
-      } else {
-        play_next();
+      if( code !== 4 ){
+        PLAYER = null;
+        if( PLAYLIST.length === (STATE.playingIndex + 1) ) {
+          echo_status('Finished playing.');
+          set_state({
+            isPlaying: false,
+            playingIndex: -1
+          });
+          echo_playlist(PLAYLIST, STATE.playingIndex);
+        } else {
+          play_next();
+        }
       }
     });
   } else {
@@ -99,7 +101,7 @@ function request_add_item() {
       if( !STATE.isPlaying && STATE.lastPlayedIndex !== -1 ) {
         // We were playing songs and finished
         // Play this one we just added
-        play_song(STATE.lastPlayedIndex);
+        play_song(STATE.lastPlayedIndex + 1);
       }else if( STATE.playingIndex == -1 ) {
         // We had no songs. Play the first one now!
         play_song(0);
@@ -154,6 +156,6 @@ term.on( 'key' , function( name , matches , data ) {
  */
 term.clear();
 term.fullscreen();
-echo_instructions('KEYS: A: Add item | D: Delete item | N: Next | P: Prev | I: Play intex | SPACE: pause/play | Q: QUIT');
+echo_instructions('KEYS: A: Add item | D: Delete item | N: Next | P: Prev | I: Play index | SPACE: pause/play | Q: Quit');
 echo_status('Add a YouTube URL to start playing');
 request_add_item();
