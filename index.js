@@ -119,9 +119,9 @@ function request_add_item() {
   set_state({isAsking: true});
   echo_input('Enter YouTube URL: ');
   term.inputField(function( error , input ) {
-    echo_input('Loading...');
     set_state({isAsking: false});
     if( input.trim() ){
+      echo_input('Loading...');
       playlist_add(input, title => {
         echo_input('');
         PLAYLIST.push({
