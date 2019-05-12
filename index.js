@@ -78,7 +78,11 @@ function play_song(index){
     PLAYER.stderr.on( 'data', data => {
       let str = data.toString(), lines = str.split(/(\r?\n)/g);
       if( !STATE.isAsking ){
-        echo_status('Playing #%s | %s', STATE.playingIndex, lines[0]);
+        if( lines[0].includes('Failed to open') ){
+          echo_status('Error playing #%s', STATE.playingIndex);
+        } else {
+          echo_status('Playing #%s | %s', STATE.playingIndex, lines[0]);
+        }
       }
     });
 
