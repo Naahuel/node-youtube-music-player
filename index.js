@@ -24,7 +24,10 @@ let PLAYLIST = [];
 
 function terminate() {
   /** Terminate program */
-	setTimeout( function() { process.exit() } , 100 ) ;
+	setTimeout( function() {
+    term.clear();
+    process.exit();
+  } , 100 ) ;
 }
 
 function set_state(state){
