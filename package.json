@@ -9,6 +9,7 @@
   "author": "Nahuel José",
   "license": "MIT",
   "dependencies": {
+    "get-title-at-url": "^1.1.6",
     "terminal-kit": "^1.28.0"
   }
 }

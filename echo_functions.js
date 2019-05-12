@@ -44,7 +44,7 @@ const echo_playlist = (playlist, playingIndex) => {
   playlist.forEach((item, index) => {
     let isPlaying = index === playingIndex ? '>>' : '  ';
     let color     = index === playingIndex ? 'green' : 'white';
-    term.bold.moveTo.eraseLine.eraseLineAfter[color]( LINES.PLAYLIST[0], yPos, "%s#%s\t%s", isPlaying, index, item );
+    term.bold.moveTo.eraseLine.eraseLineAfter[color]( LINES.PLAYLIST[0], yPos, "%s#%s\t%s", isPlaying, index, item.title );
     yPos += 1;
   })
 }

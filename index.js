@@ -2,6 +2,7 @@
 
 "use strict";
 const term = require( 'terminal-kit' ).terminal;
+const getTitleAtUrl = require('get-title-at-url');
 const { spawn } = require( 'child_process' );
 let PLAYER = null;
 
@@ -66,7 +67,7 @@ function play_song(index){
       PLAYER.kill();
     }
 
-    PLAYER = spawn( 'mpv', [ '--no-video', playItem ] );
+    PLAYER = spawn( 'mpv', [ '--no-video', playItem.url ] );
 
     PLAYER.stdout.on( 'data', data => {
       let str = data.toString(), lines = str.split(/(\r?\n)/g);
@@ -107,24 +108,36 @@ function play_song(index){
   }
 }
 
+function playlist_add(url, cb){
+  if( url ){
+    getTitleAtUrl(url, cb);
+  }
+}
+
 function request_add_item() {
   /** Request a URL to the user */
   set_state({isAsking: true});
   echo_input('Enter YouTube URL: ');
   term.inputField(function( error , input ) {
-    echo_input('');
+    echo_input('Loading...');
     set_state({isAsking: false});
     if( input.trim() ){
-      PLAYLIST.push(input.trim());
-      echo_playlist(PLAYLIST, STATE.playingIndex);
-      if( !STATE.isPlaying && STATE.lastPlayedIndex !== -1 ) {
-        // We were playing songs and finished
-        // Play this one we just added
-        play_song(STATE.lastPlayedIndex + 1);
-      }else if( STATE.playingIndex == -1 ) {
-        // We had no songs. Play the first one now!
-        play_song(0);
-      }
+      playlist_add(input, title => {
+        echo_input('');
+        PLAYLIST.push({
+          title,
+          url: input
+        });
+        echo_playlist(PLAYLIST, STATE.playingIndex);
+        if( !STATE.isPlaying && STATE.lastPlayedIndex !== -1 ) {
+          // We were playing songs and finished
+          // Play this one we just added
+          play_song(STATE.lastPlayedIndex + 1);
+        }else if( STATE.playingIndex == -1 ) {
+          // We had no songs. Play the first one now!
+          play_song(0);
+        }
+      });
     }
   });
 }
