@@ -10,6 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "get-title-at-url": "^1.1.6",
-    "terminal-kit": "^1.28.0"
+    "terminal-kit": "^3.0.0"
   }
 }
